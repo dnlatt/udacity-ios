@@ -7,11 +7,11 @@
 
 import UIKit
 
-class SentMemeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SentMemeTableViewController: UITableViewController {
+    
     
     
     @IBOutlet weak var navigationBar: UINavigationItem!
-    
     
     var memes: [Meme]! {
             let object = UIApplication.shared.delegate
@@ -19,17 +19,15 @@ class SentMemeTableViewController: UIViewController, UITableViewDelegate, UITabl
             return appDelegate.memes
         }
     
-    
-    
     override func viewWillAppear(_ animated: Bool) {
-        
-        
+        self.tableView.reloadData()
     }
        
     override func viewDidLoad() {
     
         super.viewDidLoad()
-        let addMeme = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addMeme(_:)) )
+        tableView.rowHeight = 120
+        let addMeme = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addMeme(_:)) )
             self.navigationBar.rightBarButtonItem  = addMeme
        
     }
@@ -38,20 +36,41 @@ class SentMemeTableViewController: UIViewController, UITableViewDelegate, UITabl
         let addMeme = self.storyboard!.instantiateViewController(withIdentifier: "GenerateMeme") as! MemeEditorViewController
         present(addMeme, animated: true, completion: nil)
     }
+
     
-   
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if (self.memes.count>0)
+        {
+            tableView.backgroundView = nil
+        }
+        else {
+            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text          = "No Meme Data!"
+            noDataLabel.textColor     = UIColor.black
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView  = noDataLabel
+            tableView.separatorStyle  = .none
+            
+        }
+        
         return self.memes.count
     
     }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "memeTableCell")!
         let meme = self.memes[(indexPath as NSIndexPath).row]
         cell.imageView?.image = meme.memeImage
-        cell.textLabel?.text = meme.topText
-
+        cell.textLabel?.text = "\(meme.topText) \(meme.bottomText)"
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailController = self.storyboard!.instantiateViewController(withIdentifier: "MemeDetailsViewController") as! MemeDetailsViewController
+        detailController.meme = self.memes[(indexPath as NSIndexPath).row]
+        self.navigationController!.pushViewController(detailController, animated: true)
+    }
 }
+
+

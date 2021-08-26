@@ -29,8 +29,16 @@ class MemeEditorViewController: UIViewController{
         NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size:40)!,
         NSAttributedString.Key.strokeWidth: -3.6,
         NSAttributedString.Key.paragraphStyle: NSMutableParagraphStyle()]
+    
+    
+    func prepareTextField(textField: UITextField, text: String) {
+        textField.delegate = self
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
+        textField.text = text
+    }
   
-    // MARK: System Functions
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,13 +52,6 @@ class MemeEditorViewController: UIViewController{
         // Setting Bottom Text Field
         prepareTextField(textField: bottomTextField, text:"BOTTOM")
         
-    }
-    
-    func prepareTextField(textField: UITextField, text: String) {
-        textField.delegate = self
-        textField.defaultTextAttributes = memeTextAttributes
-        textField.textAlignment = .center
-        textField.text = text
     }
     
     override func viewWillAppear(_ animated: Bool) {
