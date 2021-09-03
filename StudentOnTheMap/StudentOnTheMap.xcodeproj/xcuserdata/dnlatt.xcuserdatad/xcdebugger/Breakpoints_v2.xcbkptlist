@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "04DA899A-E753-488C-9063-FDE04C9107AB"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C89BB839-2199-47A0-9889-91517BBA43DA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StudentOnTheMap/Models/Udacity Client/UdacityClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "login(username:password:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4EC4B36B-EE95-4010-AC77-F1145A5A8709"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StudentOnTheMap/Models/Udacity Client/UdacityClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "getAllStudentsLocations(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4EC4B36B-EE95-4010-AC77-F1145A5A8709 - ed678ca42ca8318b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static StudentOnTheMap.UdacityClient.getAllStudentsLocations(completion: (Swift.Optional&lt;Swift.Array&lt;StudentOnTheMap.StudentInformation&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "StudentOnTheMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dnlatt/Documents/iOS-Udacity/StudentOnTheMap/StudentOnTheMap/Models/Udacity%20Client/UdacityClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "113">
+               </Location>
+               <Location
+                  uuid = "4EC4B36B-EE95-4010-AC77-F1145A5A8709 - 7915c0cd2ff5f4a8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;StudentOnTheMap.StudentsLocation&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static StudentOnTheMap.UdacityClient.getAllStudentsLocations(completion: (Swift.Optional&lt;Swift.Array&lt;StudentOnTheMap.StudentInformation&gt;&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "StudentOnTheMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dnlatt/Documents/iOS-Udacity/StudentOnTheMap/StudentOnTheMap/Models/Udacity%20Client/UdacityClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "129"
+                  endingLineNumber = "129"
+                  offsetFromSymbolStart = "232">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B10004C7-C723-410C-8529-023B1BEE380D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StudentOnTheMap/Controllers/TableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
