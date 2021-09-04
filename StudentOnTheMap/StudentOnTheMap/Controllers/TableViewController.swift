@@ -32,11 +32,14 @@ class TableViewController: UITableViewController {
     func retrieveAllStudents() {
         UdacityClient.getAllStudentsLocations(completion: { (students, error) in
             
-            self.students = students ?? []
-
-            DispatchQueue.main.async {
-
-                self.tableView.reloadData()
+            if error != nil {
+                self.showAlert(message: error?.localizedDescription ?? "", title: "Error")
+            }
+            else {
+                self.students = students ?? []
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         })
     }

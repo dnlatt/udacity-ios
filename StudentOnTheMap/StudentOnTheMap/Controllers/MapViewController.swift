@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController {
     
     // Mark Properties
     var studentsLocations = [StudentInformation]()
@@ -38,28 +38,35 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         setLoading(true)
         UdacityClient.getAllStudentsLocations(completion: { (students, error) in
             
-            self.mapView.removeAnnotations(self.annotations)
-            self.annotations.removeAll()
-            self.studentsLocations = students ?? []
             
-            for studentLocation in self.studentsLocations {
-                let lat = CLLocationDegrees(studentLocation.latitude)
-                let long = CLLocationDegrees(studentLocation.longitude)
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                let first = studentLocation.firstName
-                let last = studentLocation.lastName
-                let mediaURL = studentLocation.mediaURL
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = "\(first) \(last)"
-                annotation.subtitle = mediaURL
-                self.annotations.append(annotation)
+            if error != nil {
+                self.showAlert(message: error?.localizedDescription ?? "", title: "Error")
             }
-
-            DispatchQueue.main.async {
-                 self.mapView.addAnnotations(self.annotations)
+            else {
+                self.mapView.removeAnnotations(self.annotations)
+                self.annotations.removeAll()
+                self.studentsLocations = students ?? []
                 
+                for studentLocation in self.studentsLocations {
+                    let lat = CLLocationDegrees(studentLocation.latitude)
+                    let long = CLLocationDegrees(studentLocation.longitude)
+                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    let first = studentLocation.firstName
+                    let last = studentLocation.lastName
+                    let mediaURL = studentLocation.mediaURL
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate
+                    annotation.title = "\(first) \(last)"
+                    annotation.subtitle = mediaURL
+                    self.annotations.append(annotation)
+                }
+
+                DispatchQueue.main.async {
+                     self.mapView.addAnnotations(self.annotations)
+                    
+                }
             }
+            
         })
         setLoading(false)
     }
@@ -82,8 +89,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         setStudentsPins()
     }
     
-    // MARK: Map view data source
     
+    // MARK: Loading Status
+    
+    func setLoading(_ loadingStatus: Bool) {
+        if loadingStatus {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+}
+
+// MARK: Map view data source
+
+extension MapViewController: MKMapViewDelegate {
+        
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
@@ -104,16 +125,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             if let toOpen = view.annotation?.subtitle {
                 openWebLink(toOpen ?? "")
             }
-        }
-    }
-    
-    // MARK: Loading Status
-    
-    func setLoading(_ loadingStatus: Bool) {
-        if loadingStatus {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
         }
     }
 }

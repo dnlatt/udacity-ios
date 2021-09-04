@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class SubmitStudentLocationViewController: UIViewController, MKMapViewDelegate {
+class SubmitStudentLocationViewController: UIViewController {
     
     // MARK: Properties
     
@@ -27,7 +27,6 @@ class SubmitStudentLocationViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setStudentLocation()
-        // Do any additional setup after loading the view.
     }
     
 
@@ -54,8 +53,7 @@ class SubmitStudentLocationViewController: UIViewController, MKMapViewDelegate {
     @IBAction func finishTapped(_ sender: Any) {
         if let studentInformation = self.studentInformation {
             UdacityClient.addStudentLocation(information: studentInformation) { (success, error) in
-                print("Status \(success)")
-                print("Status \(error)")
+                
                 if success {
                     DispatchQueue.main.async {
                         self.dismiss(animated: true, completion: nil)
@@ -71,9 +69,22 @@ class SubmitStudentLocationViewController: UIViewController, MKMapViewDelegate {
     
     }
     
+    // MARK: Loading Status
     
-    // MARK: Map view data source
-    
+    func setLoading(_ loadingStatus: Bool) {
+        if loadingStatus {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+
+}
+
+// MARK: Map view data source
+
+extension SubmitStudentLocationViewController: MKMapViewDelegate {
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
@@ -96,15 +107,4 @@ class SubmitStudentLocationViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
-    
-    // MARK: Loading Status
-    
-    func setLoading(_ loadingStatus: Bool) {
-        if loadingStatus {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-        }
-    }
-
 }

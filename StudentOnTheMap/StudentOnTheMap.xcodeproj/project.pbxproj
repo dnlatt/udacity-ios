@@ -25,6 +25,7 @@
 		99EA2F0826DF68E40062B9DA /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA2F0726DF68E40062B9DA /* ViewControllerExtension.swift */; };
 		99EA2F0A26E05DD20062B9DA /* SubmitStudentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA2F0926E05DD20062B9DA /* SubmitStudentLocationViewController.swift */; };
 		99EA2F0C26E0AA460062B9DA /* PostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA2F0B26E0AA460062B9DA /* PostResponse.swift */; };
+		99EA2F0E26E2F8510062B9DA /* StudentInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA2F0D26E2F8510062B9DA /* StudentInfoResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		99EA2F0726DF68E40062B9DA /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		99EA2F0926E05DD20062B9DA /* SubmitStudentLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitStudentLocationViewController.swift; sourceTree = "<group>"; };
 		99EA2F0B26E0AA460062B9DA /* PostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponse.swift; sourceTree = "<group>"; };
+		99EA2F0D26E2F8510062B9DA /* StudentInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInfoResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				99DBD43D26DDDC30003A91F8 /* LoginResponse.swift */,
 				99DBD43F26DDFC21003A91F8 /* Session.swift */,
 				99EA2F0B26E0AA460062B9DA /* PostResponse.swift */,
+				99EA2F0D26E2F8510062B9DA /* StudentInfoResponse.swift */,
 			);
 			path = "Udacity Responses";
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				99EA2F0826DF68E40062B9DA /* ViewControllerExtension.swift in Sources */,
 				9987B18226DDB94B00B29E03 /* AddStudentLocationViewController.swift in Sources */,
 				99E77F5226DCC1C9001EC609 /* AppDelegate.swift in Sources */,
+				99EA2F0E26E2F8510062B9DA /* StudentInfoResponse.swift in Sources */,
 				99DBD43E26DDDC30003A91F8 /* LoginResponse.swift in Sources */,
 				9987B18426DDBAB800B29E03 /* LoginRequest.swift in Sources */,
 				99E77F5426DCC1C9001EC609 /* SceneDelegate.swift in Sources */,

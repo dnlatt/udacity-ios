@@ -12,9 +12,9 @@ class NetworkingHelpers {
     
     // MARK: Get Request
     
-    class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, Error?) -> Void) -> URLSessionTask {
+    class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, apiPostType: String, completion: @escaping (ResponseType?, Error?) -> Void) -> URLSessionTask {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else {
+            guard var data = data else {
                 DispatchQueue.main.async {
                     completion(nil, error)
                 }
@@ -23,6 +23,14 @@ class NetworkingHelpers {
             
             let decoder = JSONDecoder()
             do {
+                
+                // Check The API is using Udacity
+                
+                if apiPostType == "Udacity" {
+                    let range = 5..<data.count
+                    data = data.subdata(in: range)
+                }
+                
                 let responseObject = try decoder.decode(ResponseType.self, from: data)
                 DispatchQueue.main.async {
                     completion(responseObject, nil)

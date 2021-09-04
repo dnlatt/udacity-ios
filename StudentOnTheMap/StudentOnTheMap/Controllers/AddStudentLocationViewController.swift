@@ -18,13 +18,19 @@ class AddStudentLocationViewController: UIViewController {
     @IBOutlet weak var findLocation: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    // MARK: Properties
     
+    var textFields: [UITextField] {
+        return [studentLocationTextField, studentURLTextField]
+    }
     
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        studentLocationTextField.text = ""
-        studentURLTextField.text = ""
+        textFields.forEach {
+            $0.delegate = self
+            $0.text = ""
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,12 +56,14 @@ class AddStudentLocationViewController: UIViewController {
             return
         }
         findGeocodePosition(searchLocation: studentLocationTextField.text ?? "" )
+        setLoggingIn(false)
     }
     
     // MARK: Find Location
     
     private func findGeocodePosition(searchLocation: String) {
         
+        setLoggingIn(true)
         
         CLGeocoder().geocodeAddressString(searchLocation) { (newMarker, error) in
             if let error = error {
@@ -85,20 +93,23 @@ class AddStudentLocationViewController: UIViewController {
     
     private func setNewLocation(_ coordinate: CLLocationCoordinate2D) {
         let controller = storyboard?.instantiateViewController(withIdentifier: "SubmitStudentLocationViewController") as! SubmitStudentLocationViewController
-        let firstName = generateName()
-        let lastName = generateName()
         
-        let studentInfo = StudentInformation(firstName: firstName, lastName: lastName, longitude: coordinate.longitude, latitude: coordinate.latitude, mapString: studentURLTextField.text!, mediaURL: studentURLTextField.text!, uniqueKey: UdacityClient.Auth.key, objectId: "", createdAt: "", updatedAt: "")
+        // Build Student Info
+    
+        let studentInfoDict = [
+            "uniqueKey": UdacityClient.Auth.key,
+            "firstName": UdacityClient.Auth.firstName,
+            "lastName": UdacityClient.Auth.lastName,
+            "mapString": studentURLTextField.text!,
+            "mediaURL": studentURLTextField.text!,
+            "latitude": coordinate.latitude,
+            "longitude": coordinate.longitude,
+        ] as [String: AnyObject]
+        
+        let studentInfo = StudentInformation(studentInfoDict)
+        
         controller.studentInformation = studentInfo
         self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    // MARK: Generate Random Name
-    
-    private func generateName() -> String {
-        let array = ["Adam", "Alex", "Aaron", "Ben", "Carl", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter", "Anderson", "Ashwoon", "Aikin", "Bateman", "Bongard", "Bowers", "Boyd", "Cannon", "Cast", "Deitz", "Dewalt", "Ebner", "Frick", "Hancock", "Haworth", "Hesch", "Hoffman", "Kassing", "Knutson", "Lawless", "Lawicki", "Mccord", "McCormack", "Miller", "Myers", "Nugent", "Ortiz", "Orwig", "Ory", "Paiser", "Pak", "Pettigrew", "Quinn", "Quizoz", "Ramachandran", "Resnick", "Sagar", "Schickowski", "Schiebel", "Sellon", "Severson", "Shaffer", "Solberg", "Soloman", "Sonderling", "Soukup", "Soulis", "Stahl", "Sweeney", "Tandy", "Trebil", "Trusela", "Trussel", "Turco", "Uddin", "Uflan", "Ulrich", "Upson", "Vader", "Vail", "Valente", "Van Zandt", "Vanderpoel", "Ventotla", "Vogal", "Wagle", "Wagner", "Wakefield", "Weinstein", "Weiss", "Woo", "Yang", "Yates", "Yocum", "Zeaser", "Zeller", "Ziegler", "Bauer", "Baxster", "Casal", "Cataldi", "Caswell", "Celedon", "Chambers", "Chapman", "Christensen", "Darnell", "Davidson", "Davis", "DeLorenzo", "Dinkins", "Doran", "Dugelman", "Dugan", "Duffman", "Eastman", "Ferro", "Ferry", "Fletcher", "Fietzer", "Hylan", "Hydinger", "Illingsworth", "Ingram", "Irwin", "Jagtap", "Jenson", "Johnson", "Johnsen", "Jones", "Jurgenson", "Kalleg", "Kaskel", "Keller", "Leisinger", "LePage", "Lewis", "Linde", "Lulloff", "Maki", "Martin", "McGinnis", "Mills", "Moody", "Moore", "Napier", "Nelson", "Norquist", "Nuttle", "Olson", "Ostrander", "Reamer", "Reardon", "Reyes", "Rice", "Ripka", "Roberts", "Rogers", "Root", "Sandstrom", "Sawyer", "Schlicht", "Schmitt", "Schwager", "Schutz", "Schuster", "Tapia", "Thompson", "Tiernan", "Tisler"]
-        let randomName = array.randomElement()!
-        return randomName
     }
     
     // MARK: Set Login Status
@@ -113,5 +124,83 @@ class AddStudentLocationViewController: UIViewController {
         studentURLTextField.isEnabled = !loggingIn
         findLocation.isEnabled = !loggingIn
         
+    }
+    
+    // MARK: Set Button State
+    
+    func setButtonState(_ buttonState: Bool) {
+        findLocation.isEnabled = buttonState
+    }
+    
+    func checkTextFieldsStatus()
+    {
+        if studentLocationTextField.text != "" && studentURLTextField.text != "" {
+            setButtonState(true)
+        }else if studentLocationTextField.text! == "" || studentURLTextField.text! == "" {
+            setButtonState(false)
+        }else {
+            setButtonState(false)
+        }
+    }
+}
+
+
+extension AddStudentLocationViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let selectedTextFieldIndex = textFields.firstIndex(of: textField), selectedTextFieldIndex < textFields.count - 1 {
+            textFields[selectedTextFieldIndex + 1].becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder() // last textfield, dismiss keyboard directly
+        }
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        checkTextFieldsStatus()
+        return true
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        checkTextFieldsStatus()
+        return true
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        checkTextFieldsStatus()
+        return true
+    }
+}
+
+// MAKK : Keyboard Show / Hide
+extension AddStudentLocationViewController {
+    
+    func subscribeToKeyboardNotifications() {
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name:   UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    func unsubscribeFromKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification:Notification) {
+        if studentURLTextField.isEditing {
+            view.frame.origin.y = 0 - getKeyboardHeight(notification)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification:Notification) {
+
+        view.frame.origin.y = 0
+    }
+
+    func getKeyboardHeight(_ notification:Notification) -> CGFloat {
+
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.cgRectValue.height
     }
 }

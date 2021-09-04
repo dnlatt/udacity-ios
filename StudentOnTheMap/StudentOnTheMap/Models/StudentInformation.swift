@@ -23,7 +23,19 @@ struct StudentInformation: Codable {
     let objectId: String?
     let createdAt: String?
     let updatedAt: String?
+    
+    init(_ dictionary: [String: AnyObject]) {
+        self.firstName = dictionary["firstName"] as? String ?? ""
+        self.lastName = dictionary["lastName"] as? String ?? ""
+        self.longitude = dictionary["longitude"] as? Double ?? 0.0
+        self.latitude = dictionary["latitude"] as? Double ?? 0.0
+        self.mapString = dictionary["mapString"] as? String ?? ""
+        self.mediaURL = dictionary["mediaURL"] as? String ?? ""
+        self.uniqueKey = dictionary["uniqueKey"] as? String ?? ""
+        self.objectId = dictionary["objectId"] as? String ?? ""
+        self.createdAt = dictionary["createdAt"] as? String ?? ""
+        self.updatedAt = dictionary["updatedAt"] as? String ?? ""
+    }
 }
 
 
-// {"firstName":"Narendar","lastName":"Singh","longitude":23.7274284,"latitude":37.9818899,"mapString":"Athens","mediaURL":"https://www.google.crhome","uniqueKey":"159285065","objectId":"c4cnkqmsfla6gpm9k8ug","createdAt":"2021-08-15T20:34:50.540Z","updatedAt":"2021-08-15T20:34:50.540Z"}

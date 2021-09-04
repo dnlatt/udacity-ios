@@ -14,19 +14,22 @@ class UdacityClient {
         static var sessionId: String? = nil
         static var key = ""
         static var objectId = ""
+        static var firstName = ""
+        static var lastName = ""
     }
     
     // MARK : Properties
     
     enum Endpoints {
+        
         static let base = "https://onthemap-api.udacity.com/v1"
 
-        
         case login
         case logOut
         case studentLocation
         case addStudentLocation
         case signUp
+        case getStudentInfo
         
         var stringValue: String {
             switch self {
@@ -40,6 +43,9 @@ class UdacityClient {
                     return Endpoints.base + "/StudentLocation"
                 case .signUp:
                     return "https://auth.udacity.com/sign-up"
+                case .getStudentInfo:
+                    return Endpoints.base + "/users/" + Auth.key
+                
             }
         }
         
@@ -58,6 +64,14 @@ class UdacityClient {
             if let response = response {
                 Auth.sessionId = response.session.id
                 Auth.key = response.account.key
+                getStudentProfile(completion: { (success, error) in
+                    if success {
+                        print("User profile fetched.")
+                    }
+                    else {
+                        
+                    }
+                })
                 completion(true, nil)
             } else {
                 completion(false, nil)
@@ -98,7 +112,7 @@ class UdacityClient {
     // MARK : Get All Student Locations
     
     class func getAllStudentsLocations (completion: @escaping ([StudentInformation]?, Error?) -> Void) {
-        NetworkingHelpers.taskForGETRequest(url: Endpoints.studentLocation.url, responseType: StudentsLocation.self) { (response, error) in
+        NetworkingHelpers.taskForGETRequest(url: Endpoints.studentLocation.url, responseType: StudentsLocation.self, apiPostType: "Parse") { (response, error) in
             if let response = response {
                 completion(response.results, nil)
             } else {
@@ -123,6 +137,24 @@ class UdacityClient {
             }
             
         }
+    }
+    
+    // MARK : Get Student Info
+    
+    class func getStudentProfile(completion: @escaping (Bool, Error?) -> Void) {
+        print("End Point URL \(Endpoints.getStudentInfo.url)")
+        NetworkingHelpers.taskForGETRequest(url: Endpoints.getStudentInfo.url, responseType: StudentProfile.self, apiPostType: "Udacity") { (response, error) in
+            if let response = response {
+                Auth.firstName = response.firstName
+                Auth.lastName = response.lastName
+                completion(true, nil)
+            }
+            else
+            {
+                completion(false, error)
+            }
+        }
+        
     }
     
 }

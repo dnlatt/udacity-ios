@@ -15,20 +15,26 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    // MARK: Properties
+    
+    var textFields: [UITextField] {
+        return [emailTextField, passwordTextField]
+    }
     
     // MARK: Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setLoggingIn(false)
-        emailTextField.text = ""
-        passwordTextField.text = ""
+        setButtonState(false)
+        
+        textFields.forEach {
+            $0.delegate = self
+            $0.text = ""
+        }
     }
     
     
@@ -42,12 +48,31 @@ class LoginViewController: UIViewController {
     
     func handleLoginResponse(success: Bool, error: Error?){
         setLoggingIn(false)
-        if success {
-            performSegue(withIdentifier: "login", sender: nil)
+        
+        let email = emailTextField.text
+        let password = passwordTextField.text
+        
+        if (email!.isEmpty) || (password!.isEmpty) {
+            
+            showAlert(message: "Email and Password cannot be empty", title: "Error")
+            
+        } else {
+            if error != nil {
+                
+                showAlert(message: "Failed Request!", title: "Error")
+                
+            }
+            if !success {
+                
+                showAlert(message: "Invalid Credentials", title: "Login Failed")
+                
+            } else {
+                
+                performSegue(withIdentifier: "login", sender: nil)
+                
+            }
         }
-        else {
-            showAlert(message: error?.localizedDescription ?? "", title: "Login Failed")
-        }
+        
     }
     
     // MARK: Sign Up
@@ -69,6 +94,48 @@ class LoginViewController: UIViewController {
         passwordTextField.isEnabled = !loggingIn
         loginButton.isEnabled = !loggingIn
         
+    }
+    
+    func setButtonState(_ buttonState: Bool) {
+        loginButton.isEnabled = buttonState
+    }
+    
+    func checkTextFieldsStatus()
+    {
+        if emailTextField.text != "" && passwordTextField.text != "" {
+            setButtonState(true)
+        }else if emailTextField.text! == "" || passwordTextField.text! == "" {
+            setButtonState(false)
+        }else {
+            setButtonState(false)
+        }
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let selectedTextFieldIndex = textFields.firstIndex(of: textField), selectedTextFieldIndex < textFields.count - 1 {
+            textFields[selectedTextFieldIndex + 1].becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder() // last textfield, dismiss keyboard directly
+        }
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        checkTextFieldsStatus()
+        return true
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        checkTextFieldsStatus()
+        return true
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        checkTextFieldsStatus()
+        return true
     }
 }
 
