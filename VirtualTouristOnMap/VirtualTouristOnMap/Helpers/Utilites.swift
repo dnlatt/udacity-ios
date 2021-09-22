@@ -12,7 +12,7 @@ import UIKit
 
 class Utilites: UIViewController {
     
-    static let photosPerPage = 21
+    static let photosPerPage = 18
     
     static func showMessage(title: String, message: String, view: UIViewController) {
         DispatchQueue.main.async {

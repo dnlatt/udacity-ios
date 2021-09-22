@@ -12,7 +12,7 @@ import UIKit
 class FlickrClient {
    
     // MARK : Properties
-    static let apiKey = "0a7e1179f73468f0ba09d3e87c1241f7"
+    static let apiKey = "59489c25333eccab5c1b25e522870585"
     
     enum Endpoints {
         
@@ -24,7 +24,7 @@ class FlickrClient {
             switch(self) {
             case .searchPhotos(let latitude, let longitude, let page):
 
-                return Endpoints.base + "&lat=\(latitude)&lon=\(longitude)&radius=16&per_page=21&page=\(page)"
+                return Endpoints.base + "&lat=\(latitude)&lon=\(longitude)&radius=16&per_page=18&page=\(page)"
             }
         }
         

@@ -191,7 +191,7 @@ class PhotoAlbumViewController: UIViewController {
                 do {
                     try DataController.shared.viewContext.save()
                 } catch {
-                    Utilites.showMessage(title: "Error", message: "Can't add photo to device. Try again later.", view: self)
+                    Utilites.showMessage(title: "Error", message: "Can't add photo to device.", view: self)
                 }
             }
         
