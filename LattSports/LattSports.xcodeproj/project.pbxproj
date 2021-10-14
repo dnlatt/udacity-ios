@@ -1,0 +1,643 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		99A8A8D627029E4B004E7D7D /* NewsArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A8A8D527029E4B004E7D7D /* NewsArticles.swift */; };
+		99A8A8D927029EF8004E7D7D /* NewsArticleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A8A8D827029EF8004E7D7D /* NewsArticleAPI.swift */; };
+		99A8A8DE2702A8F7004E7D7D /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A8A8DD2702A8F7004E7D7D /* MockURLProtocol.swift */; };
+		99A8A8E22702FD72004E7D7D /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A8A8E12702FD72004E7D7D /* URLSessionProtocol.swift */; };
+		99A8A8E62702FFCE004E7D7D /* LattSports.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 99A8A8E42702FFCE004E7D7D /* LattSports.xcdatamodeld */; };
+		99A8A8E827030282004E7D7D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A8A8E727030282004E7D7D /* DataController.swift */; };
+		99A8A8EA27031989004E7D7D /* Utilites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A8A8E927031989004E7D7D /* Utilites.swift */; };
+		99A8A8ED27049326004E7D7D /* ArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A8A8EC27049326004E7D7D /* ArticleTableViewCell.swift */; };
+		99A962DC2708708B000D82B4 /* MatchesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A962DB2708708B000D82B4 /* MatchesResponse.swift */; };
+		99A962E027093E90000D82B4 /* ArticleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A962DF27093E90000D82B4 /* ArticleImageView.swift */; };
+		99A96314270DC52B000D82B4 /* MatchFixtureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A96313270DC52B000D82B4 /* MatchFixtureTableViewCell.swift */; };
+		99C3B75A2707E13400A37A6A /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C3B7592707E13400A37A6A /* extension.swift */; };
+		99C3B75C2707E1FD00A37A6A /* StandingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C3B75B2707E1FD00A37A6A /* StandingsTableViewCell.swift */; };
+		99CA9AEE270FF2CB0023DEC7 /* MatchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA9AED270FF2CB0023DEC7 /* MatchResultTableViewCell.swift */; };
+		99D6A6CC2711A93C0036E892 /* BookStandingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D6A6CB2711A93C0036E892 /* BookStandingTableViewCell.swift */; };
+		99E176632706F04700087753 /* MatchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E176622706F04700087753 /* MatchAPI.swift */; };
+		99E176652706F83400087753 /* LeagueStandingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E176642706F83300087753 /* LeagueStandingResponse.swift */; };
+		99EB673A2701AD0500A76B4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB67392701AD0500A76B4D /* AppDelegate.swift */; };
+		99EB673C2701AD0500A76B4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB673B2701AD0500A76B4D /* SceneDelegate.swift */; };
+		99EB673E2701AD0500A76B4D /* LattSportsHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB673D2701AD0500A76B4D /* LattSportsHomeViewController.swift */; };
+		99EB67412701AD0500A76B4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99EB673F2701AD0500A76B4D /* Main.storyboard */; };
+		99EB67432701AD0700A76B4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99EB67422701AD0700A76B4D /* Assets.xcassets */; };
+		99EB67462701AD0700A76B4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99EB67442701AD0700A76B4D /* LaunchScreen.storyboard */; };
+		99EB67512701AD0700A76B4D /* LattSportsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB67502701AD0700A76B4D /* LattSportsTests.swift */; };
+		99EB67622701B63A00A76B4D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB67612701B63A00A76B4D /* Constants.swift */; };
+		99EB67642701C7AC00A76B4D /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB67632701C7AC00A76B4D /* NewsViewController.swift */; };
+		99EB67662701C7D300A76B4D /* MatchFixturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB67652701C7D300A76B4D /* MatchFixturesViewController.swift */; };
+		99EB67682701C7E300A76B4D /* MatchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB67672701C7E300A76B4D /* MatchResultsViewController.swift */; };
+		99EB676A2701C7F200A76B4D /* StandingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EB67692701C7F200A76B4D /* StandingsViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		99EB674D2701AD0700A76B4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99EB672E2701AD0500A76B4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99EB67352701AD0500A76B4D;
+			remoteInfo = LattSports;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		99A8A8D527029E4B004E7D7D /* NewsArticles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticles.swift; sourceTree = "<group>"; };
+		99A8A8D827029EF8004E7D7D /* NewsArticleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticleAPI.swift; sourceTree = "<group>"; };
+		99A8A8DD2702A8F7004E7D7D /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		99A8A8E12702FD72004E7D7D /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
+		99A8A8E52702FFCE004E7D7D /* LattSports.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LattSports.xcdatamodel; sourceTree = "<group>"; };
+		99A8A8E727030282004E7D7D /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		99A8A8E927031989004E7D7D /* Utilites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilites.swift; sourceTree = "<group>"; };
+		99A8A8EC27049326004E7D7D /* ArticleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleTableViewCell.swift; sourceTree = "<group>"; };
+		99A962DB2708708B000D82B4 /* MatchesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesResponse.swift; sourceTree = "<group>"; };
+		99A962DF27093E90000D82B4 /* ArticleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleImageView.swift; sourceTree = "<group>"; };
+		99A96313270DC52B000D82B4 /* MatchFixtureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFixtureTableViewCell.swift; sourceTree = "<group>"; };
+		99C3B7592707E13400A37A6A /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
+		99C3B75B2707E1FD00A37A6A /* StandingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsTableViewCell.swift; sourceTree = "<group>"; };
+		99CA9AED270FF2CB0023DEC7 /* MatchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchResultTableViewCell.swift; sourceTree = "<group>"; };
+		99D6A6CB2711A93C0036E892 /* BookStandingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookStandingTableViewCell.swift; sourceTree = "<group>"; };
+		99E176622706F04700087753 /* MatchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchAPI.swift; sourceTree = "<group>"; };
+		99E176642706F83300087753 /* LeagueStandingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueStandingResponse.swift; sourceTree = "<group>"; };
+		99EB67362701AD0500A76B4D /* LattSports.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LattSports.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		99EB67392701AD0500A76B4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		99EB673B2701AD0500A76B4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		99EB673D2701AD0500A76B4D /* LattSportsHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LattSportsHomeViewController.swift; sourceTree = "<group>"; };
+		99EB67402701AD0500A76B4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		99EB67422701AD0700A76B4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		99EB67452701AD0700A76B4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		99EB67472701AD0700A76B4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		99EB674C2701AD0700A76B4D /* LattSportsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LattSportsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99EB67502701AD0700A76B4D /* LattSportsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LattSportsTests.swift; sourceTree = "<group>"; };
+		99EB67522701AD0700A76B4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		99EB67612701B63A00A76B4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		99EB67632701C7AC00A76B4D /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		99EB67652701C7D300A76B4D /* MatchFixturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFixturesViewController.swift; sourceTree = "<group>"; };
+		99EB67672701C7E300A76B4D /* MatchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchResultsViewController.swift; sourceTree = "<group>"; };
+		99EB67692701C7F200A76B4D /* StandingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		99EB67332701AD0500A76B4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99EB67492701AD0700A76B4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		99A8A8D727029E7D004E7D7D /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				99A8A8D827029EF8004E7D7D /* NewsArticleAPI.swift */,
+				99A8A8E12702FD72004E7D7D /* URLSessionProtocol.swift */,
+				99E176622706F04700087753 /* MatchAPI.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		99A8A8E32702FFB8004E7D7D /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				99A8A8E42702FFCE004E7D7D /* LattSports.xcdatamodeld */,
+				99A8A8E727030282004E7D7D /* DataController.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		99A8A8EB27040B40004E7D7D /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		99EB672D2701AD0500A76B4D = {
+			isa = PBXGroup;
+			children = (
+				99EB67382701AD0500A76B4D /* LattSports */,
+				99EB674F2701AD0700A76B4D /* LattSportsTests */,
+				99EB67372701AD0500A76B4D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		99EB67372701AD0500A76B4D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99EB67362701AD0500A76B4D /* LattSports.app */,
+				99EB674C2701AD0700A76B4D /* LattSportsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99EB67382701AD0500A76B4D /* LattSports */ = {
+			isa = PBXGroup;
+			children = (
+				99A8A8EB27040B40004E7D7D /* View Models */,
+				99A8A8D727029E7D004E7D7D /* Networking */,
+				99EB67602701B62E00A76B4D /* Helpers */,
+				99EB675E2701AD2600A76B4D /* Resources */,
+				99EB675D2701AD2000A76B4D /* Controllers */,
+				99EB675C2701AD1C00A76B4D /* Views */,
+				99EB675B2701AD1500A76B4D /* Models */,
+				99EB67472701AD0700A76B4D /* Info.plist */,
+			);
+			path = LattSports;
+			sourceTree = "<group>";
+		};
+		99EB674F2701AD0700A76B4D /* LattSportsTests */ = {
+			isa = PBXGroup;
+			children = (
+				99EB67502701AD0700A76B4D /* LattSportsTests.swift */,
+				99EB67522701AD0700A76B4D /* Info.plist */,
+				99A8A8DD2702A8F7004E7D7D /* MockURLProtocol.swift */,
+			);
+			path = LattSportsTests;
+			sourceTree = "<group>";
+		};
+		99EB675B2701AD1500A76B4D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				99A8A8E32702FFB8004E7D7D /* Core Data */,
+				99A8A8D527029E4B004E7D7D /* NewsArticles.swift */,
+				99E176642706F83300087753 /* LeagueStandingResponse.swift */,
+				99A962DB2708708B000D82B4 /* MatchesResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		99EB675C2701AD1C00A76B4D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				99EB675F2701AD3400A76B4D /* Story Board */,
+				99A8A8EC27049326004E7D7D /* ArticleTableViewCell.swift */,
+				99C3B75B2707E1FD00A37A6A /* StandingsTableViewCell.swift */,
+				99A962DF27093E90000D82B4 /* ArticleImageView.swift */,
+				99A96313270DC52B000D82B4 /* MatchFixtureTableViewCell.swift */,
+				99CA9AED270FF2CB0023DEC7 /* MatchResultTableViewCell.swift */,
+				99D6A6CB2711A93C0036E892 /* BookStandingTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		99EB675D2701AD2000A76B4D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				99EB673D2701AD0500A76B4D /* LattSportsHomeViewController.swift */,
+				99EB67632701C7AC00A76B4D /* NewsViewController.swift */,
+				99EB67652701C7D300A76B4D /* MatchFixturesViewController.swift */,
+				99EB67672701C7E300A76B4D /* MatchResultsViewController.swift */,
+				99EB67692701C7F200A76B4D /* StandingsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		99EB675E2701AD2600A76B4D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				99EB67422701AD0700A76B4D /* Assets.xcassets */,
+				99EB67392701AD0500A76B4D /* AppDelegate.swift */,
+				99EB673B2701AD0500A76B4D /* SceneDelegate.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		99EB675F2701AD3400A76B4D /* Story Board */ = {
+			isa = PBXGroup;
+			children = (
+				99EB673F2701AD0500A76B4D /* Main.storyboard */,
+				99EB67442701AD0700A76B4D /* LaunchScreen.storyboard */,
+			);
+			path = "Story Board";
+			sourceTree = "<group>";
+		};
+		99EB67602701B62E00A76B4D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				99EB67612701B63A00A76B4D /* Constants.swift */,
+				99A8A8E927031989004E7D7D /* Utilites.swift */,
+				99C3B7592707E13400A37A6A /* extension.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		99EB67352701AD0500A76B4D /* LattSports */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99EB67552701AD0700A76B4D /* Build configuration list for PBXNativeTarget "LattSports" */;
+			buildPhases = (
+				99EB67322701AD0500A76B4D /* Sources */,
+				99EB67332701AD0500A76B4D /* Frameworks */,
+				99EB67342701AD0500A76B4D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LattSports;
+			productName = LattSports;
+			productReference = 99EB67362701AD0500A76B4D /* LattSports.app */;
+			productType = "com.apple.product-type.application";
+		};
+		99EB674B2701AD0700A76B4D /* LattSportsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99EB67582701AD0700A76B4D /* Build configuration list for PBXNativeTarget "LattSportsTests" */;
+			buildPhases = (
+				99EB67482701AD0700A76B4D /* Sources */,
+				99EB67492701AD0700A76B4D /* Frameworks */,
+				99EB674A2701AD0700A76B4D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				99EB674E2701AD0700A76B4D /* PBXTargetDependency */,
+			);
+			name = LattSportsTests;
+			productName = LattSportsTests;
+			productReference = 99EB674C2701AD0700A76B4D /* LattSportsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		99EB672E2701AD0500A76B4D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1170;
+				LastUpgradeCheck = 1170;
+				ORGANIZATIONNAME = dnlatt;
+				TargetAttributes = {
+					99EB67352701AD0500A76B4D = {
+						CreatedOnToolsVersion = 11.7;
+					};
+					99EB674B2701AD0700A76B4D = {
+						CreatedOnToolsVersion = 11.7;
+						TestTargetID = 99EB67352701AD0500A76B4D;
+					};
+				};
+			};
+			buildConfigurationList = 99EB67312701AD0500A76B4D /* Build configuration list for PBXProject "LattSports" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 99EB672D2701AD0500A76B4D;
+			productRefGroup = 99EB67372701AD0500A76B4D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				99EB67352701AD0500A76B4D /* LattSports */,
+				99EB674B2701AD0700A76B4D /* LattSportsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		99EB67342701AD0500A76B4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99EB67462701AD0700A76B4D /* LaunchScreen.storyboard in Resources */,
+				99EB67432701AD0700A76B4D /* Assets.xcassets in Resources */,
+				99EB67412701AD0500A76B4D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99EB674A2701AD0700A76B4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		99EB67322701AD0500A76B4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99CA9AEE270FF2CB0023DEC7 /* MatchResultTableViewCell.swift in Sources */,
+				99A8A8E22702FD72004E7D7D /* URLSessionProtocol.swift in Sources */,
+				99A962DC2708708B000D82B4 /* MatchesResponse.swift in Sources */,
+				99A962E027093E90000D82B4 /* ArticleImageView.swift in Sources */,
+				99A8A8E62702FFCE004E7D7D /* LattSports.xcdatamodeld in Sources */,
+				99C3B75A2707E13400A37A6A /* extension.swift in Sources */,
+				99EB67682701C7E300A76B4D /* MatchResultsViewController.swift in Sources */,
+				99EB67642701C7AC00A76B4D /* NewsViewController.swift in Sources */,
+				99EB676A2701C7F200A76B4D /* StandingsViewController.swift in Sources */,
+				99EB673E2701AD0500A76B4D /* LattSportsHomeViewController.swift in Sources */,
+				99A8A8E827030282004E7D7D /* DataController.swift in Sources */,
+				99E176652706F83400087753 /* LeagueStandingResponse.swift in Sources */,
+				99A8A8D627029E4B004E7D7D /* NewsArticles.swift in Sources */,
+				99EB673A2701AD0500A76B4D /* AppDelegate.swift in Sources */,
+				99E176632706F04700087753 /* MatchAPI.swift in Sources */,
+				99A8A8EA27031989004E7D7D /* Utilites.swift in Sources */,
+				99EB67662701C7D300A76B4D /* MatchFixturesViewController.swift in Sources */,
+				99A8A8ED27049326004E7D7D /* ArticleTableViewCell.swift in Sources */,
+				99A8A8D927029EF8004E7D7D /* NewsArticleAPI.swift in Sources */,
+				99D6A6CC2711A93C0036E892 /* BookStandingTableViewCell.swift in Sources */,
+				99EB673C2701AD0500A76B4D /* SceneDelegate.swift in Sources */,
+				99EB67622701B63A00A76B4D /* Constants.swift in Sources */,
+				99C3B75C2707E1FD00A37A6A /* StandingsTableViewCell.swift in Sources */,
+				99A96314270DC52B000D82B4 /* MatchFixtureTableViewCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99EB67482701AD0700A76B4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99EB67512701AD0700A76B4D /* LattSportsTests.swift in Sources */,
+				99A8A8DE2702A8F7004E7D7D /* MockURLProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		99EB674E2701AD0700A76B4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99EB67352701AD0500A76B4D /* LattSports */;
+			targetProxy = 99EB674D2701AD0700A76B4D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		99EB673F2701AD0500A76B4D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99EB67402701AD0500A76B4D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		99EB67442701AD0700A76B4D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99EB67452701AD0700A76B4D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		99EB67532701AD0700A76B4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		99EB67542701AD0700A76B4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		99EB67562701AD0700A76B4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LattSports/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.latt.LattSports;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		99EB67572701AD0700A76B4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LattSports/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.latt.LattSports;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		99EB67592701AD0700A76B4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LattSportsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.latt.LattSportsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LattSports.app/LattSports";
+			};
+			name = Debug;
+		};
+		99EB675A2701AD0700A76B4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LattSportsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.latt.LattSportsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LattSports.app/LattSports";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		99EB67312701AD0500A76B4D /* Build configuration list for PBXProject "LattSports" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99EB67532701AD0700A76B4D /* Debug */,
+				99EB67542701AD0700A76B4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99EB67552701AD0700A76B4D /* Build configuration list for PBXNativeTarget "LattSports" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99EB67562701AD0700A76B4D /* Debug */,
+				99EB67572701AD0700A76B4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99EB67582701AD0700A76B4D /* Build configuration list for PBXNativeTarget "LattSportsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99EB67592701AD0700A76B4D /* Debug */,
+				99EB675A2701AD0700A76B4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		99A8A8E42702FFCE004E7D7D /* LattSports.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				99A8A8E52702FFCE004E7D7D /* LattSports.xcdatamodel */,
+			);
+			currentVersion = 99A8A8E52702FFCE004E7D7D /* LattSports.xcdatamodel */;
+			path = LattSports.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 99EB672E2701AD0500A76B4D /* Project object */;
+}
