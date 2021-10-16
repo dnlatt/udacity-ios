@@ -1,41 +1,16 @@
 //
-//  StandingsTableViewCell.swift
+//  StandingHeaderTableViewCell.swift
 //  LattSports
 //
-//  Created by dnlatt on 2/10/21.
+//  Created by dnlatt on 15/10/21.
 //  Copyright © 2021 dnlatt. All rights reserved.
 //
 
 import UIKit
 
-class StandingsTableViewCell: UITableViewCell {
-    
-    static let identifer = "StandingsTableViewCell"
-    
-    
-    var standing : FootballLeagueStandings? {
-        didSet {
-            
-            
-            teamRank.text = standing?.rank ?? ""
-            
-            if (standing?.teamLogo != nil )
-            {
-                teamImage.image = UIImage(data: (standing?.teamLogo!)!)
-            }
-            else {
-                 teamImage.image = UIImage(named: "flag")
-            }
-            teamNameLabel.text = standing?.teamName ?? ""
-            teamPlayed.text = standing?.played
-            teamWin.text = standing?.win
-            teamDraw.text = standing?.draw
-            teamLose.text = standing?.lose
-            goalsDiff.text = standing?.goalsDiff
-            points.text = standing?.points
-            
-        }
-    }
+class StandingHeaderTableViewCell: UITableViewCell {
+
+    static let identifer = "StandingHeaderTableViewCell"
     
     lazy var teamStandingStackView: UIStackView = {
         let stackView = UIStackView()
@@ -51,12 +26,13 @@ class StandingsTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
         lbl.textAlignment = .left
-
+        lbl.text = "#"
         return lbl
     }()
     
     private let teamImage : UIImageView = {
         let imgView = UIImageView()
+        imgView.image = UIImage(named: "flag")
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.contentMode = .scaleAspectFit
         imgView.clipsToBounds = true
@@ -69,6 +45,7 @@ class StandingsTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
         lbl.textAlignment = .left
+        lbl.text = "Club"
         return lbl
     }()
     
@@ -78,6 +55,7 @@ class StandingsTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
         lbl.textAlignment = .left
+        lbl.text = "MP"
         return lbl
     }()
     
@@ -87,6 +65,7 @@ class StandingsTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
         lbl.textAlignment = .left
+        lbl.text = "W"
         return lbl
     }()
     
@@ -96,6 +75,7 @@ class StandingsTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
         lbl.textAlignment = .left
+        lbl.text = "D"
         return lbl
     }()
     
@@ -105,6 +85,7 @@ class StandingsTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
         lbl.textAlignment = .left
+        lbl.text = "L"
         return lbl
     }()
     
@@ -114,6 +95,7 @@ class StandingsTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
         lbl.textAlignment = .left
+        lbl.text = "GD"
         return lbl
     }()
     
@@ -123,6 +105,7 @@ class StandingsTableViewCell: UITableViewCell {
         lbl.textColor = .black
         lbl.font = UIFont.boldSystemFont(ofSize: 12)
         lbl.textAlignment = .left
+        lbl.text = "PTS"
         return lbl
     }()
     
@@ -165,8 +148,8 @@ class StandingsTableViewCell: UITableViewCell {
             teamWin.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
             teamDraw.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
             teamLose.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
-            goalsDiff.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.07),
-            //goalsDiff.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
+            goalsDiff.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
+            points.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
             
         ])
     }
@@ -174,5 +157,6 @@ class StandingsTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 
 }

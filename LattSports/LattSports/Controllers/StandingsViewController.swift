@@ -8,18 +8,30 @@
 
 import UIKit
 import CoreData
+import Network
 
-class StandingsViewController: UIViewController {
-
+class StandingsViewController: UIViewController, NetworkCheckObserver {
+    
     var activityView: UIActivityIndicatorView?
     
     // MARK: - Properties
     
     var coreDataStandings: [FootballLeagueStandings] = []
+    var networkCheck = NetworkCheck.sharedInstance()
     
     // MARK: UI
     
+    private let refreshControl = UIRefreshControl()
+    
     let spinner = UIActivityIndicatorView(style: .large)
+    
+    lazy var standingStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 8
+        stackView.axis = .vertical
+        return stackView
+    }()
     
     lazy var tableView : UITableView = {
         let table = UITableView()
@@ -30,7 +42,22 @@ class StandingsViewController: UIViewController {
         table.rowHeight = 50
         table.separatorStyle = .none
         table.headerView(forSection: 0)
+        
+        if #available(iOS 10.0, *) {
+            table.refreshControl = refreshControl
+        } else {
+            table.addSubview(refreshControl)
+            
+        }
+        
         return table
+    }()
+    
+    private var header: StandingsHeaderView = {
+        
+        let header = StandingsHeaderView()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        return header
     }()
     
     private lazy var refreshButton: UIButton = {
@@ -38,12 +65,11 @@ class StandingsViewController: UIViewController {
         let buttonHeight = CGFloat(30)
         let button = UIButton(type: .custom)
         button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
-        button.addTarget(self, action: #selector(onRefreshButtonClicked), for: .touchUpInside)
+        button.addTarget(self, action: #selector(refreshData), for: .touchUpInside)
         button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         return button
     }()
-    
     
     
     override func viewDidLoad() {
@@ -53,56 +79,53 @@ class StandingsViewController: UIViewController {
         
         setupView()
         
-        // Check for Internet Connection
         
-        if Utilites.connectedToNetwork() == false {
-            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
-            // Get Fresh Data
-            getDataFromAPI()
-            
+        // Getting Data from Core Data
+        guard let loadStandings = loadStandingsFromCoreData() else {
+            return
         }
+        if loadStandings.count > 0 {
+            coreDataStandings = loadStandings
+        }
+    
         else
         {
-            // Getting Data from Core Data
-            guard let loadStandings = loadStandingsFromCoreData() else {
-                return
-            }
-
-
-            if loadStandings.count > 0 {
-                coreDataStandings = loadStandings
-            }
-            else
-            {
-                getDataFromAPI()
-            }
-            
+            // Get Data from API
+            getDataFromAPI()
         }
-        
-
-        
-        
         
         setupLayout()
  
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        networkCheck.addObserver(observer: self)
+    }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        networkCheck.removeObserver(observer: self)
+    }
+    
+    func statusDidChange(status: NWPath.Status) {
+        print(status)
+        if(status == .unsatisfied) {
+            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            self.tableView.refreshControl = nil
+            
+        }
+        
+        if(status == .satisfied) {
+            self.tableView.refreshControl = refreshControl
+        }
+        
+    }
 
     // MARK: Set up
     
-    
-    
-    func setupView() {
-        
-        //view.addSubview(headerView)
-        view.addSubview(tableView)
-        let spinner = UIActivityIndicatorView(style: .medium)
-
-        spinner.startAnimating()
-        tableView.backgroundView = spinner
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: refreshButton)
-
+    @objc private func refreshData(_ sender: Any) {
+        getDataFromAPI()
     }
     
     func showActivityIndicator() {
@@ -111,19 +134,35 @@ class StandingsViewController: UIViewController {
     }
     
     @objc func onRefreshButtonClicked(_ sender: Any){
-        print("tap reload")
        getDataFromAPI()
+    }
+    
+    func setupView() {
+        
+        view.addSubview(standingStackView)
+        standingStackView.addArrangedSubview(header)
+        standingStackView.addArrangedSubview(tableView)
+        let spinner = UIActivityIndicatorView(style: .medium)
+
+        spinner.startAnimating()
+        tableView.backgroundView = spinner
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: refreshButton)
+        
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+
     }
     
     func setupLayout() {
         
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            
+            standingStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            standingStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16),
+            standingStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            standingStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 8),
+            header.heightAnchor.constraint(equalToConstant: 15  )
+
         ])
+        
     }
 
     // Refresh the Table
@@ -131,65 +170,60 @@ class StandingsViewController: UIViewController {
         self.coreDataStandings = loadStandingsFromCoreData()!
         Utilites.performUIUpdatesOnMain {
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }
+        
     }
     
     
     
     func getDataFromAPI() {
         
-        // MatchAPI.shared.getData(completion: completeGetData(response:error:success:), url: MatchAPI.Endpoints.getStandings.url)
-        showActivityIndicator()
-        
-        getStandings { (response, error, success) in
-            guard response != nil else {
-                        return
-                    }
+        if networkCheck.currentStatus == .satisfied {
+            showActivityIndicator()
                     
-                    if success {
-                //print(" Success \(response?.response)")
-                
-                // Delete from Core Data
-                self.removeDataFromCoreData(footballLeagueStandings: self.coreDataStandings)
-                self.coreDataStandings.removeAll()
-                
-                let tableHeader = FootballLeagueStandings(context: DataController.shared.viewContext)
-                tableHeader.rank = "#"
-                tableHeader.points = "PTS"
-                tableHeader.teamLogo = nil
-                tableHeader.teamName = "Club"
-                tableHeader.played = "MP"
-                tableHeader.win = "W"
-                tableHeader.draw = "D"
-                tableHeader.lose = "L"
-                tableHeader.goalsDiff = "GD"
-                self.coreDataStandings.append(tableHeader)
-                
-                // Insert to Core Data
-                if let records = response?.response {
-                    for record in records {
+                    getStandings { (response, error, success) in
+                        guard response != nil else {
+                                    return
+                                }
+                                
+                            if success {
+                            //print(" Success \(response?.response)")
+                            
+                            // Delete from Core Data
+                            self.removeDataFromCoreData(footballLeagueStandings: self.coreDataStandings)
+                            self.coreDataStandings.removeAll()
                         
-                        let standings = record.league.standings
-                        for teams in standings {
-                            for leagueTeam in teams {
-                                self.addDataToCoreData(teamStanding: leagueTeam)
+                            // Insert to Core Data
+                            if let records = response?.response {
+                                for record in records {
+                                    
+                                    let standings = record.league.standings
+                                    for teams in standings {
+                                        for leagueTeam in teams {
+                                            self.addDataToCoreData(teamStanding: leagueTeam)
+                                        }
+                                    }
+                                }
                             }
+                            
+                            self.refreshUITable()
+                            
+                        }
+                        else {
+                        
+                            
+                            Utilites.showMessage(title: "Error", message: "Something went wrong! Try again later", view: self)
                         }
                     }
-                }
-                
-                self.refreshUITable()
-                
-            }
-            else {
-                guard Utilites.connectedToNetwork() == true else {
-                    Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
-                    return
-                }
-                
-                Utilites.showMessage(title: "Error", message: "Something went wrong! Try again later", view: self)
-            }
+            
         }
+        
+        else {
+            Utilites.showMessage(title: "Error", message: "No internet connection!", view: self)
+        }
+            
+        
     }
     
     func getStandings (completion: @escaping (LeagueStandingResponse?, Error?, Bool) -> Void) {
@@ -205,7 +239,6 @@ class StandingsViewController: UIViewController {
             }
         }
     }
-    
     
     func addDataToCoreData(teamStanding: Standing) {
     
@@ -267,7 +300,11 @@ extension StandingsViewController: UITableViewDelegate, UITableViewDataSource {
         
         
     }
-
+    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//            return header
+//    }
+    
 }
 
 // MARK: Fetched Results

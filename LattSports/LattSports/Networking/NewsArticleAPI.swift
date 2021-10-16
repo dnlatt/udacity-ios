@@ -58,7 +58,7 @@ class NewsAPIClient {
                 let decoder = JSONDecoder()
                 let responseObject = try decoder.decode(ArticlesResponses.self, from: data)
                 completion(responseObject.self, nil, true)
-                //print("Getting Data News Data \(responseObject)")
+                print("Getting Data News Data \(responseObject)")
 
             } catch{
                 completion(nil,error, false)

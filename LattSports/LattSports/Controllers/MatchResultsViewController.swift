@@ -8,15 +8,16 @@
 
 import UIKit
 import CoreData
+import Network
 
-class MatchResultsViewController: UIViewController {
+class MatchResultsViewController: UIViewController, NetworkCheckObserver  {
     
     // MARK: Properties
     var coreDataMatchResults: [MatchResults] = []
-    
+    var networkCheck = NetworkCheck.sharedInstance()
 
     // MARK: UI
-    
+    private let refreshControl = UIRefreshControl()
     let spinner = UIActivityIndicatorView(style: .large)
     
     lazy var tableView : UITableView = {
@@ -24,6 +25,12 @@ class MatchResultsViewController: UIViewController {
         table.register(MatchResultTableViewCell.self, forCellReuseIdentifier: MatchResultTableViewCell.identifer)
         table.delegate = self
         table.dataSource = self
+        if #available(iOS 10.0, *) {
+            table.refreshControl = refreshControl
+        } else {
+            table.addSubview(refreshControl)
+            
+        }
         return table
     }()
     
@@ -49,13 +56,13 @@ class MatchResultsViewController: UIViewController {
         
         // Check for Internet Connection
         
-        if Utilites.connectedToNetwork() == false {
-            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+        if networkCheck.currentStatus == .satisfied {
             // Get Fresh Data
             getDataFromAPI()
-            
         }
         else {
+            
+            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
             
             guard let loadReults = loadMatchResultsFromCoreData() else {
                 return
@@ -65,24 +72,47 @@ class MatchResultsViewController: UIViewController {
                 coreDataMatchResults = loadReults
                 coreDataMatchResults.reverse()
             }
-            else
-            {
-                getDataFromAPI()
-            }
-            
         }
         
         setupLayout()
         
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        networkCheck.addObserver(observer: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        networkCheck.removeObserver(observer: self)
+    }
+    
+    func statusDidChange(status: NWPath.Status) {
+        print(status)
+        if(status == .unsatisfied) {
+            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            self.tableView.refreshControl = nil
+            //self.refreshControl.endRefreshing()
+        }
+        
+        if(status == .satisfied) {
+            self.tableView.refreshControl = refreshControl
+        }
+        
+    }
     
     
     func setupView() {
         
         view.addSubview(tableView)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: refreshButton)
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: refreshButton)
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshData(_ sender: Any) {
+        getDataFromAPI()
+        
     }
     
     func showActivityIndicator() {
@@ -191,8 +221,10 @@ class MatchResultsViewController: UIViewController {
         self.coreDataMatchResults = loadMatchResultsFromCoreData()!
         self.coreDataMatchResults.reverse()
         Utilites.performUIUpdatesOnMain {
-           self.tableView.reloadData()
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }
+        
     }
 }
 

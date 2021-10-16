@@ -8,14 +8,16 @@
 
 import UIKit
 import CoreData
+import Network
 
-class MatchFixturesViewController: UIViewController {
+class MatchFixturesViewController: UIViewController, NetworkCheckObserver  {
     
     // MARK: - Properties
     var coreDataMatchFixtures: [MatchFixtures] = []
+    var networkCheck = NetworkCheck.sharedInstance()
     
     // MARK: UI
-    
+    private let refreshControl = UIRefreshControl()
     let spinner = UIActivityIndicatorView(style: .large)
     
     lazy var tableView : UITableView = {
@@ -23,6 +25,12 @@ class MatchFixturesViewController: UIViewController {
         table.register(MatchFixtureTableViewCell.self, forCellReuseIdentifier: MatchFixtureTableViewCell.identifer)
         table.delegate = self
         table.dataSource = self
+        if #available(iOS 10.0, *) {
+            table.refreshControl = refreshControl
+        } else {
+            table.addSubview(refreshControl)
+            
+        }
         return table
     }()
     
@@ -44,17 +52,16 @@ class MatchFixturesViewController: UIViewController {
         
         setupView()
         
-        // Check for Internet Connection
         
-        if Utilites.connectedToNetwork() == false {
-            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+        if networkCheck.currentStatus == .satisfied  {
             // Get Fresh Data
             getDataFromAPI()
-            
         }
         else {
-            // Get Data from Core Data
             
+            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            
+            // Get Data from Core Data
             guard let loadFixtures = loadMatchFixturesFromCoreData() else {
                 return
             }
@@ -62,15 +69,34 @@ class MatchFixturesViewController: UIViewController {
             if loadFixtures.count > 0 {
                 coreDataMatchFixtures = loadFixtures
             }
-            else
-            {
-                getDataFromAPI()
-            }
-            
+    
         }
         
         setupLayout()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        networkCheck.addObserver(observer: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        networkCheck.removeObserver(observer: self)
+    }
+    
+    func statusDidChange(status: NWPath.Status) {
+        print(status)
+        if(status == .unsatisfied) {
+            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            self.tableView.refreshControl = nil
+            //self.refreshControl.endRefreshing()
+        }
+        
+        if(status == .satisfied) {
+            self.tableView.refreshControl = refreshControl
+        }
         
     }
         
@@ -80,7 +106,8 @@ class MatchFixturesViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: refreshButton)
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: refreshButton)
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
     }
     
@@ -95,6 +122,12 @@ class MatchFixturesViewController: UIViewController {
     
     @objc func onRefreshButtonClicked(_ sender: Any){
         getDataFromAPI()
+    }
+    
+    @objc private func refreshData(_ sender: Any) {
+        getDataFromAPI()
+        
+        
     }
     
     func getAllMatchFixtures (completion: @escaping (MatchResponse?, Error?, Bool) -> Void) {
@@ -128,6 +161,7 @@ class MatchFixturesViewController: UIViewController {
         
         refreshUITable()
 
+        
     }
     
     
@@ -141,11 +175,13 @@ class MatchFixturesViewController: UIViewController {
         self.coreDataMatchFixtures = loadMatchFixturesFromCoreData()!
         Utilites.performUIUpdatesOnMain {
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }
+        
     }
     
     func getDataFromAPI() {
-
+        
         showActivityIndicator()
         
         getAllMatchFixtures { (response, error, success) in
@@ -158,6 +194,11 @@ class MatchFixturesViewController: UIViewController {
                 self.removeDataFromCoreData(matchFixtures: self.coreDataMatchFixtures)
                 self.coreDataMatchFixtures.removeAll()
                 
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+                
                 // Add Data to Core Data
                 if let matches = response?.matches {
                     for match in matches {
@@ -169,6 +210,11 @@ class MatchFixturesViewController: UIViewController {
             }
             else {
             
+                guard Utilites.connectedToNetwork() == false else {
+                    Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+                    return
+                }
+                
                 Utilites.showMessage(title: "Error", message: "Something went wrong! Try again later", view: self)
                  
             }

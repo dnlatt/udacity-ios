@@ -184,8 +184,6 @@ class MatchResultTableViewCell: UITableViewCell {
             //homeTeam.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             homeTeam.topAnchor.constraint(equalTo: matchDateTime.bottomAnchor, constant: 8 ),
             homeTeam.widthAnchor.constraint(equalToConstant: 300),
-            
-            
         ])
         
         // Home Score

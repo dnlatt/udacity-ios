@@ -9,15 +9,18 @@
 import UIKit
 import CoreData
 import SafariServices
+import Network
 
-class NewsViewController: UIViewController, UINavigationBarDelegate {
+class NewsViewController: UIViewController, UINavigationBarDelegate, NetworkCheckObserver  {
     
     
     // MARK: - Properties
     var coreDataArticles: [ArticleCD] = []
+    var networkCheck = NetworkCheck.sharedInstance()
     
     // MARK: - UI
     
+    private let refreshControl = UIRefreshControl()
     let spinner = UIActivityIndicatorView(style: .large)
     
     
@@ -28,6 +31,12 @@ class NewsViewController: UIViewController, UINavigationBarDelegate {
         table.delegate = self
         table.dataSource = self
         table.separatorStyle = .none
+        if #available(iOS 10.0, *) {
+            table.refreshControl = refreshControl
+        } else {
+            table.addSubview(refreshControl)
+            
+        }
         return table
     }()
     
@@ -42,7 +51,6 @@ class NewsViewController: UIViewController, UINavigationBarDelegate {
         return button
     }()
     
-   
     // MARK: - System Life Cycle
     
    override func viewDidLoad() {
@@ -55,15 +63,12 @@ class NewsViewController: UIViewController, UINavigationBarDelegate {
     
         // Check for Internet Connection
     
-        if Utilites.connectedToNetwork() == false {
-            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+        if networkCheck.currentStatus == .satisfied {
             
             // Get Fresh Data
-            getDataFromAPI()
+            // getDataFromAPI()
             
-        }
-            
-        else {
+            // Temp Get Data
             
             // Get Data from Core Data
             guard let loadArticles = loadArticlesFromCoreData() else {
@@ -73,11 +78,22 @@ class NewsViewController: UIViewController, UINavigationBarDelegate {
             if loadArticles.count > 0 {
                 coreDataArticles = loadArticles
             }
-            else
-            {
-                getDataFromAPI()
+            
+        }
+            
+        else {
+            
+            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            
+            // Get Data from Core Data
+            guard let loadArticles = loadArticlesFromCoreData() else {
+                return
             }
             
+            if loadArticles.count > 0 {
+                coreDataArticles = loadArticles
+            }
+        
         }
         
         
@@ -89,15 +105,42 @@ class NewsViewController: UIViewController, UINavigationBarDelegate {
         getDataFromAPI()
     }
   
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        networkCheck.addObserver(observer: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        networkCheck.removeObserver(observer: self)
+    }
+    
+    func statusDidChange(status: NWPath.Status) {
+        print(status)
+        if(status == .unsatisfied) {
+            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            self.tableView.refreshControl = nil
+            //self.refreshControl.endRefreshing()
+        }
+        
+        if(status == .satisfied) {
+            self.tableView.refreshControl = refreshControl
+        }
+        
+    }
     
     // Set up
     
     func setupView() {
         
         view.addSubview(tableView)        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: refreshButton)
+        //self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: refreshButton)
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
-         
+    }
+    
+    @objc private func refreshData(_ sender: Any) {
+        getDataFromAPI()
     }
     
     func showActivityIndicator() {
@@ -120,7 +163,10 @@ class NewsViewController: UIViewController, UINavigationBarDelegate {
         self.coreDataArticles = loadArticlesFromCoreData()!
         Utilites.performUIUpdatesOnMain {
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }
+        
+        
     }
 
 }
@@ -196,24 +242,26 @@ extension NewsViewController {
     }
     
     func getDataFromAPI() {
+        
         showActivityIndicator()
         NewsAPIClient.shared.getData(completion: completeGetData(response:error:success:), url: NewsAPIClient.Endpoints.getAllNews.url)
     }
     
     func addDataToCoreData(article: Article) {
     
-        let articleToInsert = ArticleCD(context: DataController.shared.viewContext)
-        articleToInsert.title = article.title
-        articleToInsert.articleDescription = article.articleDescription ?? ""
-        articleToInsert.url = article.url ?? ""
-        articleToInsert.urlToImage = setPhotoImage(from: article.urlToImage ?? "")
-        coreDataArticles.append(articleToInsert)
-        do {
-            try DataController.shared.viewContext.save()
-        } catch {
-            Utilites.showMessage(title: "Error", message: "Can't save data to device.", view: self)
-        }
-
+            let articleToInsert = ArticleCD(context: DataController.shared.viewContext)
+            articleToInsert.title = article.title ?? ""
+            articleToInsert.articleDescription = article.articleDescription ?? ""
+            articleToInsert.url = article.url ?? ""
+            articleToInsert.urlToImage = setPhotoImage(from: article.urlToImage ?? "")
+            coreDataArticles.append(articleToInsert)
+            do {
+                try DataController.shared.viewContext.save()
+            } catch {
+                Utilites.showMessage(title: "Error", message: "Can't save data to device.", view: self)
+            }
+        
+        
     }
     
     func setPhotoImage(from url: String) -> Data? {
