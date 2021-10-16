@@ -40,16 +40,7 @@ class NewsViewController: UIViewController, UINavigationBarDelegate, NetworkChec
         return table
     }()
     
-    private lazy var refreshButton: UIButton = {
-        let buttonWidth = CGFloat(30)
-        let buttonHeight = CGFloat(30)
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
-        button.addTarget(self, action: #selector(onRefreshButtonClicked), for: .touchUpInside)
-        button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-        button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-        return button
-    }()
+   
     
     // MARK: - System Life Cycle
     
@@ -62,45 +53,34 @@ class NewsViewController: UIViewController, UINavigationBarDelegate, NetworkChec
         title = "Home"
     
         // Check for Internet Connection
+       
+       if networkCheck.currentStatus == .unsatisfied {
+           Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+           disableRefreshControl()
+       }
+       
+       // Getting Data from Core Data
     
-        if networkCheck.currentStatus == .satisfied {
-            
-            // Get Fresh Data
-            // getDataFromAPI()
-            // Get Data from Core Data
-            guard let loadArticles = loadArticlesFromCoreData() else {
-                return
-            }
-            
-            if loadArticles.count > 0 {
-                coreDataArticles = loadArticles
-            }
-        }
-            
-        else {
-            
-            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
-            disableRefreshControl()
-            
-            // Get Data from Core Data
-            guard let loadArticles = loadArticlesFromCoreData() else {
-                return
-            }
-            
-            if loadArticles.count > 0 {
-                coreDataArticles = loadArticles
-            }
-        
-        }
-        
+       guard let loadArticles = loadArticlesFromCoreData() else {
+           return
+       }
+       
+       if loadArticles.count > 0 {
+           coreDataArticles = loadArticles
+       }
+   
+       else
+       {
+           if networkCheck.currentStatus == .satisfied {
+               // Get Data from API
+               getDataFromAPI()
+           }
+       }
+   
         setupLayout()
 
     }
     
-    @objc func onRefreshButtonClicked(_ sender: Any){
-        getDataFromAPI()
-    }
-  
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         networkCheck.addObserver(observer: self)

@@ -34,16 +34,7 @@ class MatchFixturesViewController: UIViewController, NetworkCheckObserver  {
         return table
     }()
     
-    private lazy var refreshButton: UIButton = {
-        let buttonWidth = CGFloat(30)
-        let buttonHeight = CGFloat(30)
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
-        button.addTarget(self, action: #selector(onRefreshButtonClicked), for: .touchUpInside)
-        button.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
-        button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-        return button
-    }()
+    
 
     override func viewDidLoad() {
         
@@ -129,9 +120,6 @@ class MatchFixturesViewController: UIViewController, NetworkCheckObserver  {
         tableView.frame = view.bounds
     }
     
-    @objc func onRefreshButtonClicked(_ sender: Any){
-        getDataFromAPI()
-    }
     
     @objc private func refreshData(_ sender: Any) {
         getDataFromAPI()
