@@ -67,9 +67,6 @@ class NewsViewController: UIViewController, UINavigationBarDelegate, NetworkChec
             
             // Get Fresh Data
             // getDataFromAPI()
-            
-            // Temp Get Data
-            
             // Get Data from Core Data
             guard let loadArticles = loadArticlesFromCoreData() else {
                 return
@@ -78,12 +75,12 @@ class NewsViewController: UIViewController, UINavigationBarDelegate, NetworkChec
             if loadArticles.count > 0 {
                 coreDataArticles = loadArticles
             }
-            
         }
             
         else {
             
             Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            disableRefreshControl()
             
             // Get Data from Core Data
             guard let loadArticles = loadArticlesFromCoreData() else {
@@ -95,7 +92,6 @@ class NewsViewController: UIViewController, UINavigationBarDelegate, NetworkChec
             }
         
         }
-        
         
         setupLayout()
 
@@ -116,17 +112,25 @@ class NewsViewController: UIViewController, UINavigationBarDelegate, NetworkChec
     }
     
     func statusDidChange(status: NWPath.Status) {
-        print(status)
+       
         if(status == .unsatisfied) {
             Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
-            self.tableView.refreshControl = nil
-            //self.refreshControl.endRefreshing()
+            disableRefreshControl()
         }
         
         if(status == .satisfied) {
-            self.tableView.refreshControl = refreshControl
+            enableRefreshControl()
         }
         
+    }
+    
+    func disableRefreshControl() {
+        self.tableView.refreshControl = nil
+        self.refreshControl.endRefreshing()
+    }
+    
+    func enableRefreshControl() {
+        self.tableView.refreshControl = refreshControl
     }
     
     // Set up

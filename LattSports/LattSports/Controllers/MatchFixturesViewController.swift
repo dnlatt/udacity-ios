@@ -60,6 +60,7 @@ class MatchFixturesViewController: UIViewController, NetworkCheckObserver  {
         else {
             
             Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            disableRefreshControl()
             
             // Get Data from Core Data
             guard let loadFixtures = loadMatchFixturesFromCoreData() else {
@@ -90,14 +91,22 @@ class MatchFixturesViewController: UIViewController, NetworkCheckObserver  {
         print(status)
         if(status == .unsatisfied) {
             Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
-            self.tableView.refreshControl = nil
-            //self.refreshControl.endRefreshing()
+            disableRefreshControl()
         }
         
         if(status == .satisfied) {
-            self.tableView.refreshControl = refreshControl
+            enableRefreshControl()
         }
         
+    }
+    
+    func disableRefreshControl() {
+        self.tableView.refreshControl = nil
+        self.refreshControl.endRefreshing()
+    }
+    
+    func enableRefreshControl() {
+        self.tableView.refreshControl = refreshControl
     }
         
     // MARK: Set up

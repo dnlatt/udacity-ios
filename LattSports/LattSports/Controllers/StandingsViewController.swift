@@ -79,6 +79,10 @@ class StandingsViewController: UIViewController, NetworkCheckObserver {
         
         setupView()
         
+        if networkCheck.currentStatus == .unsatisfied {
+            Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            disableRefreshControl()
+        }
         
         // Getting Data from Core Data
         guard let loadStandings = loadStandingsFromCoreData() else {
@@ -90,8 +94,10 @@ class StandingsViewController: UIViewController, NetworkCheckObserver {
     
         else
         {
-            // Get Data from API
-            getDataFromAPI()
+            if networkCheck.currentStatus == .satisfied {
+                // Get Data from API
+                getDataFromAPI()
+            }
         }
         
         setupLayout()
@@ -112,14 +118,23 @@ class StandingsViewController: UIViewController, NetworkCheckObserver {
         print(status)
         if(status == .unsatisfied) {
             Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
-            self.tableView.refreshControl = nil
+            disableRefreshControl()
             
         }
         
         if(status == .satisfied) {
-            self.tableView.refreshControl = refreshControl
+            enableRefreshControl()
         }
         
+    }
+    
+    func disableRefreshControl() {
+        self.tableView.refreshControl = nil
+        self.refreshControl.endRefreshing()
+    }
+    
+    func enableRefreshControl() {
+        self.tableView.refreshControl = refreshControl
     }
 
     // MARK: Set up

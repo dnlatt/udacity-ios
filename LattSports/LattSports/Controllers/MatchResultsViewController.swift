@@ -47,10 +47,9 @@ class MatchResultsViewController: UIViewController, NetworkCheckObserver  {
     
     override func viewDidLoad() {
         
+        
         super.viewDidLoad()
         title = "Results"
-        
-        
 
         setupView()
         
@@ -63,6 +62,7 @@ class MatchResultsViewController: UIViewController, NetworkCheckObserver  {
         else {
             
             Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
+            disableRefreshControl()
             
             guard let loadReults = loadMatchResultsFromCoreData() else {
                 return
@@ -89,17 +89,25 @@ class MatchResultsViewController: UIViewController, NetworkCheckObserver  {
     }
     
     func statusDidChange(status: NWPath.Status) {
-        print(status)
+       
         if(status == .unsatisfied) {
             Utilites.showMessage(title: "Error", message: "No Internet Connection", view: self)
-            self.tableView.refreshControl = nil
-            //self.refreshControl.endRefreshing()
+            disableRefreshControl()
         }
         
         if(status == .satisfied) {
-            self.tableView.refreshControl = refreshControl
+            enableRefreshControl()
         }
         
+    }
+    
+    func disableRefreshControl() {
+        self.tableView.refreshControl = nil
+        self.refreshControl.endRefreshing()
+    }
+    
+    func enableRefreshControl() {
+        self.tableView.refreshControl = refreshControl
     }
     
     
