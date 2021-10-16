@@ -6,21 +6,25 @@ An Sports App which is for the Football lover and it displays the latest sports 
 
 1. App has 4 screens. Main screen is the News controller. 
 
+   - Pull to refresh 
+     - User can pull the table to on each screen to get latest data. This function will disable if the internet is offline.
+     - ![This is an image](https://i.ibb.co/6D0FXgH/Screenshot-2021-10-16-at-10-21-51-AM.png)
+
    - News 
-     - User can read latest sports news in this screen. Upon clicking on aricle, new screen will appear and it's lead to the article page. User can click on 'Refresh' button from tab bar to fetch latest news.
-     - ![This is an image](https://i.ibb.co/Xkyp0TV/Screenshot-2021-10-14-at-1-29-51-PM.png)
+     - User can read latest sports news in this screen. Upon clicking on aricle, new screen will appear and it's lead to the article page. 
+     - ![This is an image](https://i.ibb.co/KK6Lvdz/Screenshot-2021-10-16-at-10-16-57-AM.png)
 
    - Fixtures
-     - User can see the upcoming fixtures for the Premier League. Clicking on 'Refresh' button will fetch the latest fixtures.
-     - ![This is an image](https://i.ibb.co/0Q7DfHw/Screenshot-2021-10-14-at-1-29-57-PM.png)
+     - User can see the upcoming fixtures for the Premier League. 
+     - ![This is an image](https://i.ibb.co/0f3QC6P/Screenshot-2021-10-16-at-10-17-01-AM.png)
 
    - Result
-     - User can see the matches results for the Premier League. Clicking on 'Refresh' button will fetch the latest results.
-     - ![This is an image](https://i.ibb.co/bvdhdhM/Screenshot-2021-10-14-at-1-30-00-PM.png)
+     - User can see the matches results for the Premier League. 
+     - ![This is an image](https://i.ibb.co/G9SbfCs/Screenshot-2021-10-16-at-10-17-08-AM.png)
 
    - Standings
-     - User can see the standing of Premier League clubs. Clicking on 'Refresh' button will fetch the latest standings.
-     - ![This is an image](https://i.ibb.co/fvwfn1h/Screenshot-2021-10-14-at-1-30-04-PM.png)
+     - User can see the standing of Premier League clubs. 
+     - ![This is an image](https://i.ibb.co/RbS5LKX/Screenshot-2021-10-16-at-10-17-16-AM.png)
 
 
 2. Networking
@@ -29,14 +33,13 @@ An Sports App which is for the Football lover and it displays the latest sports 
 
 3. Persistence
 
-   - This app use Coredata for persistence. When the application is first loaded, the app will check for internet connection. If it’s connected to the internet, the app will fetch data from API and store in CoreData. If a user clicks on the ‘refresh’ button, the App will fetch new data from the Network. If user isn’t connected to the internet, app will fetch data from Core Data and display it to user. 
+   - This app use Coredata for persistence. When the application is first loaded, the app will check for internet connection. If it’s connected to the internet, the app will fetch data from API and store in CoreData. If a user pull the table, system will perform refresh function and the App will fetch new data from the Network. If user isn’t connected to the internet, app will fetch data from Core Data and display it to user. 
 
 ## How to build
 Open the Xcode project and build as normal. No sepcial set up is required. 
 
 ## Requirements
-- Xcode 13
-- Swift 5
+The app was built using Xcode 11.7 and Swift 5
 
 ## License
 
