@@ -149,8 +149,7 @@ class StandingsHeaderView: UIView {
                teamWin.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
                teamDraw.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
                teamLose.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
-               goalsDiff.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
-               goalsDiff.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.05),
+               goalsDiff.widthAnchor.constraint(equalTo: self.widthAnchor , multiplier: 0.06),
                
            ])
            
